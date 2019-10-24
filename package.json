@@ -15,5 +15,9 @@
   "dependencies": {
     "express": "^4.17.1",
     "log4js": "^5.3.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CQZW/zwbase_node_frame.git"
   }
 }
