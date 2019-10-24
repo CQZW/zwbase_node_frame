@@ -1,0 +1,19 @@
+{
+  "name": "zwbase",
+  "version": "1.0.0",
+  "description": "a srv frame base on express",
+  "main": "index.js",
+  "scripts": {
+    "test": "node ./test/testsrv.js"
+  },
+  "keywords": [
+    "node",
+    "express"
+  ],
+  "author": "cqzw",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "log4js": "^5.3.0"
+  }
+}
