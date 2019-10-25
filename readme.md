@@ -10,8 +10,13 @@ a srv frame base on express
     ZWBaseCtr 寻找响应, 规则:比如 xxx.com/abc/user.getinfo ,
     将会在ZWBaseCtr类型 实例对象里面寻找 名称为 'ctr_getinfo' 的方法名称,进行响应
 
-数据结构, 输入控制器(ZWBaseCtr)的数据 见 getReqParams 返回值
-         控制器输出,通用的结构   { code,msg,data }
+    强烈建议继承 ZWBaseCtr 的时候先继承一个中间继承类,比如 xxxBaseCtr,让xxxBaseCtr 继承于 ZWBaseCtr
+    然后其他控制器,继承 xxxBaseCtr,这样,项目通用行为(加解密参数检查)修改,可以放到 xxxBaseCtr
+
+
+数据结构:
+        控制器输入参数(客户端请求的时候),真实参数放入 data,
+        控制器输出,通用的结构   { code,msg,data }
          
 
 calss TestSrv ....

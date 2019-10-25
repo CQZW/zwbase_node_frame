@@ -1,7 +1,27 @@
 const zwbase = require('../index');
 
 //测试 的控制器
-class testCtr extends zwbase.ZWBaseCtr
+
+//先建立项目通用的控制器,这样可以让很多共同行为由这个基础类控制
+class prjBaseCtr extends zwbase.ZWBaseCtr
+{
+    constructor(dbobj ) {
+        super(dbobj);
+        this.encryType = 1;
+    }
+
+    //比如加密解密相关的秘钥获取,,可以有这里全部修改了,
+    getKeyAndIvForEnc()
+    {
+        return ["837fe8729c1ba792","6aece0773ffea97b"];
+    }
+    getKeyAndIvForDec()
+    {
+        return this.getKeyAndIvForEnc();
+    }
+    
+}
+class testCtr extends prjBaseCtr
 {
     constructor( dbobj )
     {
@@ -47,5 +67,6 @@ class TestSrv extends zwbase.ZWBaseSrv
     }
 }
 
+console.log('req http://127.0.0.1/api/v1/testctr.getinfo for test');
 let inst = new TestSrv();
 inst.start();
