@@ -1,10 +1,11 @@
 {
   "name": "zwbase",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "a srv frame base on express",
   "main": "index.js",
   "scripts": {
-    "test": "node ./test/testsrv.js"
+    "test": "node ./test/testsrv.js",
+    "mypub":"rm -rf ./logs && npm publish"
   },
   "keywords": [
     "node",
