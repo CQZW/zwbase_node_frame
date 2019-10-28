@@ -27,7 +27,21 @@ class testCtr extends prjBaseCtr
     {
         super( dbobj );
     }
+    ctrConfig()
+    {
+        super.ctrConfig();
 
+    }
+    //for test ignore all token param 
+    isIgnoreCheckToken( path )
+    {
+        return true;
+    }
+    checkParam( param )
+    {
+        param.resb = zwbase.ZWBaseCtr.makeResb(null);
+        return Promise.resolve( param );
+    }
     async ctr_getinfo( param )
     {
         let retobj = { 'info:':'i am cq zw ,test ctr ' };
@@ -63,7 +77,7 @@ class TestSrv extends zwbase.ZWBaseSrv
     }
     getHttpsOptions()
     {
-
+        
     }
 }
 
