@@ -5,8 +5,13 @@ const zwbase = require('../index');
 //先建立项目通用的控制器,这样可以让很多共同行为由这个基础类控制
 class prjBaseCtr extends zwbase.ZWBaseCtr
 {
-    constructor(dbobj ) {
-        super(dbobj);
+    constructor( srv ) {
+        super(srv);
+    }
+
+    ctrConfig()
+    {
+        super.ctrConfig();
         this.encryType = 1;
     }
 
@@ -23,10 +28,6 @@ class prjBaseCtr extends zwbase.ZWBaseCtr
 }
 class testCtr extends prjBaseCtr
 {
-    constructor( dbobj )
-    {
-        super( dbobj );
-    }
     ctrConfig()
     {
         super.ctrConfig();
@@ -45,7 +46,8 @@ class testCtr extends prjBaseCtr
     async ctr_getinfo( param )
     {
         let retobj = { 'info:':'i am cq zw ,test ctr ' };
-        return new Promise( (resolve,reject)=>{ resolve( zwbase.ZWBaseCtr.makeResb( null,retobj ) )  } );
+        retobj.cfginfo = this.getSrv().ctrGetSrvCfgInfo();
+        return this.rr( retobj );
     }
 }
 
@@ -55,25 +57,27 @@ class TestSrv extends zwbase.ZWBaseSrv
     {
         return new Promise( ( resolve,reject ) => { resolve( null ) } );
     }
-    async start()
+    srvConfig()
     {
-        //测试代码不需要http
+        super.srvConfig();
         this.needhttps = false;
-        
-        return super.start();
     }
-    cfgRouter()
+    cfgRouter( routers )
     {
-        let apirouter = new zwbase.ZWRouter();
+        let tarr = routers||[];
+        let apirouter = new zwbase.ZWRouter( '/api/v1' );
+        tarr.push( apirouter );
+        super.cfgRouter( tarr );
+
         //所有 xxx.com/api/v1/ 下面的请求都到 apirouter里面处理
         this.getApp().use( '/api/v1' , apirouter.getRouter() );
-        super.cfgRouter();
-
         //下面具体设置 这个 路由的规则
-        let ctr = new testCtr( this.getDB() );
+        let ctr = new testCtr( this );
         apirouter.regCtr( '/testctr' , ctr );
 
         //然后请求 http://127.0.0.1/api/v1/testctr.getinfo 即可.
+        
+        
     }
     getHttpsOptions()
     {
