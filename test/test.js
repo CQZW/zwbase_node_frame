@@ -8,4 +8,4 @@
 
 let xx = new testc();
 
-console.log( !0 );
+console.log( !xx.ddd );
