@@ -66,15 +66,14 @@ class TestSrv extends zwbase.ZWBaseSrv
     {
         let tarr = routers||[];
         let apirouter = new zwbase.ZWRouter( '/api/v1' );
-        tarr.push( apirouter );
-        super.cfgRouter( tarr );
-
-        //所有 xxx.com/api/v1/ 下面的请求都到 apirouter里面处理
-        this.getApp().use( '/api/v1' , apirouter.getRouter() );
         //下面具体设置 这个 路由的规则
         let ctr = new testCtr( this );
         apirouter.regCtr( '/testctr' , ctr );
 
+
+        //然后配置 到路由里面
+        tarr.push( apirouter );
+        super.cfgRouter( tarr );
         //然后请求 http://127.0.0.1/api/v1/testctr.getinfo 即可.
         
         
