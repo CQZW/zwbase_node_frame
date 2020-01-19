@@ -70,7 +70,12 @@ class TestSrv extends zwbase.ZWBaseSrv
         let ctr = new testCtr( this );
         apirouter.regCtr( '/testctr' , ctr );
 
+        let nextrouter = new zwbase.ZWRouter();
+        nextrouter.regCtr( '/subctr',ctr );
 
+        apirouter.regCtr( '/subpath', nextrouter );
+
+  
         //然后配置 到路由里面
         tarr.push( apirouter );
         super.cfgRouter( tarr );
