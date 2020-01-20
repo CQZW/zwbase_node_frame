@@ -58,7 +58,16 @@ class testCtr extends prjBaseCtr
     srvStartOk()
     {
         this.log('test ctr srv ok');
+
+        this.startRuningJob(5000,true);
     }
+    job_runing()
+    {
+        this.log('do job ....');
+
+        //继续执行,如果不调用 super.job_runing(); 任何不会在继续了
+        super.job_runing();
+    }   
 }
 
 class testOderCtr extends prjBaseCtr
