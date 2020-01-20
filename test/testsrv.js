@@ -51,7 +51,7 @@ class testCtr extends prjBaseCtr
     {
         let retobj = { 'info:':'i am cq zw ,test ctr ' };
         retobj.cfginfo = this.getSrv().ctrGetSrvCfgInfo();
-        let orderctr = this.instanceCtr( testOderCtr );
+        let orderctr = this.importCtr( '/order' );
         retobj.orderinfo = orderctr.testfunc();
         return this.rr( retobj );
     }
@@ -82,6 +82,7 @@ class testOderCtr extends prjBaseCtr
     }
     async ctr_getorder( param )
     {
+        let obj = {}
         obj.orderinfo = 'order info';
         return this.rr( obj );
     }
@@ -110,7 +111,7 @@ class TestSrv extends zwbase.ZWBaseSrv
         let nextrouter = new zwbase.ZWRouter();
         nextrouter.regCtr( '/order',orderctr );
 
-        //apirouter.regCtr( '/extctr', nextrouter );
+        apirouter.regCtr( '/subpath/subsubpath', nextrouter );
 
   
         //然后配置 到路由里面

@@ -7,5 +7,7 @@
  }
 
 let xx = new testc();
+let ss = 'abcd';
+ss.replace('a','d');
 
-console.log( xx.constructor.name );
+console.log( ss);
