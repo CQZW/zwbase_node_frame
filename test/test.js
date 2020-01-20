@@ -8,4 +8,4 @@
 
 let xx = new testc();
 
-console.log( !xx.ddd );
+console.log( xx.constructor.name );

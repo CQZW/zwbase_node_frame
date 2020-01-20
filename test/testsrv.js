@@ -12,9 +12,13 @@ class prjBaseCtr extends zwbase.ZWBaseCtr
     ctrConfig()
     {
         super.ctrConfig();
-        this.encryType = 1;
+        this.encryType = 0;
     }
-
+    checkParam( param )
+    {
+        param.resb = this.makeResb(null,{},'检查通过');
+        return new Promise((resolve, reject) => { resolve(param) });
+    }
     //比如加密解密相关的秘钥获取,,可以有这里全部修改了,
     getKeyAndIvForEnc()
     {
@@ -40,14 +44,37 @@ class testCtr extends prjBaseCtr
     }
     checkParam( param )
     {
-        param.resb = zwbase.ZWBaseCtr.makeResb(null);
-        return Promise.resolve( param );
+        //自定义检查...
+        return super.checkParam( param );
     }
     async ctr_getinfo( param )
     {
         let retobj = { 'info:':'i am cq zw ,test ctr ' };
         retobj.cfginfo = this.getSrv().ctrGetSrvCfgInfo();
+        let orderctr = this.instanceCtr( testOderCtr );
+        retobj.orderinfo = orderctr.testfunc();
         return this.rr( retobj );
+    }
+    srvStartOk()
+    {
+        this.log('test ctr srv ok');
+    }
+}
+
+class testOderCtr extends prjBaseCtr
+{
+    testfunc()
+    {
+        return 'test order info';
+    }
+    srvStartOk()
+    {
+        this.log('order ctr srv ok')
+    }
+    async ctr_getorder( param )
+    {
+        obj.orderinfo = 'order info';
+        return this.rr( obj );
     }
 }
 
@@ -70,10 +97,11 @@ class TestSrv extends zwbase.ZWBaseSrv
         let ctr = new testCtr( this );
         apirouter.regCtr( '/testctr' , ctr );
 
+        let orderctr = new testOderCtr( this );
         let nextrouter = new zwbase.ZWRouter();
-        nextrouter.regCtr( '/subctr',ctr );
+        nextrouter.regCtr( '/order',orderctr );
 
-        apirouter.regCtr( '/subpath', nextrouter );
+        //apirouter.regCtr( '/extctr', nextrouter );
 
   
         //然后配置 到路由里面
