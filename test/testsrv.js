@@ -16,8 +16,10 @@ class prjBaseCtr extends zwbase.ZWBaseCtr
     }
     checkParam( param )
     {
-        param.resb = this.makeResb(null,{},'检查通过');
-        return new Promise((resolve, reject) => { resolve(param) });
+        param.client = 'ios';
+        param.version = '1.0';
+        param.deviceid = 'aaa';
+        return super.checkParam( param );
     }
     //比如加密解密相关的秘钥获取,,可以有这里全部修改了,
     getKeyAndIvForEnc()
@@ -36,17 +38,7 @@ class testCtr extends prjBaseCtr
     {
         super.ctrConfig();
 
-    }
-    //for test ignore all token param 
-    isIgnoreCheckToken( path )
-    {
-        return true;
-    }
-    checkParam( param )
-    {
-        //自定义检查...
-        return super.checkParam( param );
-    }
+    } 
     async ctr_getinfo( param )
     {
         let retobj = { 'info:':'i am cq zw ,test ctr ' };
@@ -65,9 +57,9 @@ class testCtr extends prjBaseCtr
     {
         this.log('do job ....');
 
-        //继续执行,如果不调用 super.job_runing(); 任何不会在继续了
+        //继续执行,如果不调用 super.job_runing(); 任务不会在继续了
         super.job_runing();
-    }   
+    }
 }
 
 class testOderCtr extends prjBaseCtr

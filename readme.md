@@ -14,28 +14,6 @@
     强烈建议继承 ZWBaseCtr 的时候先继承一个中间继承类,比如 xxxBaseCtr,让xxxBaseCtr 继承于 ZWBaseCtr
     然后其他控制器,继承 xxxBaseCtr,这样,项目通用行为(加解密参数检查)修改,可以放到 xxxBaseCtr
 
-数据结构:
-客户端请求参数结构:
-{
-    token:'xxxxx',
-    userid:1,
-    client:'ios/android/mac/win',
-    lang:'zh',
-    version:'1.0',
-    deviceid:'ddddd',
-    path:'/testctr/user.getinfo',//这个参数是框架自己添加的
-    [file]:如果有上传文件,这个是文件对象
-    //上述参数是结构性的,真正的数据在 data 里面
-    data:"base64 string enc data or json str with not enc";
-}
-服务器返回数据结构:
-{
-    code:1
-    msg:'ok'
-    data:"base64 string enc data or json str with not enc"
-}
-
-
 calss TestSrv ....
     cfgRouter()
     {
