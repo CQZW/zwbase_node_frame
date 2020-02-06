@@ -4,12 +4,18 @@
      constructor(a) {
          
      }
+     Prop1 = 1;
+
+     getinfo()
+     {
+         return '222';
+     }
+     toJSON()
+     {
+         return '11';
+     }
  }
- function tttt()
- {
 
- }
-
-let xx =  tttt();
-
-console.log( xx );
+ let obj = new testc();
+ console.log( JSON.stringify( obj ) );
+ 
