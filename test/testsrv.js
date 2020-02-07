@@ -51,12 +51,11 @@ class testCtr extends prjBaseCtr
     {
         this.log('test ctr srv ok');
 
-        this.startRuningJob(5000,true);
+        this.startRuningJob(5000);
     }
-    job_runing()
+    job_runing( isSingle )
     {
-        this.log('do job ....');
-
+        this.log('do job ...., is single:' ,isSingle);
         //继续执行,如果不调用 super.job_runing(); 任务不会在继续了
         super.job_runing();
     }
@@ -88,8 +87,8 @@ class TestSrv extends zwbase.ZWBaseSrv
     }
     srvConfig()
     {
-        super.srvConfig();
         this.needhttps = false;
+        return super.srvConfig();
     }
     cfgRouter( routers )
     {
