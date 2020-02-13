@@ -1,4 +1,4 @@
-# a srv frame base on express
+# a srv frame base on express-just a toy
 
 使用方式,2个继承
 * 1.继承 ZWBaseSrv ,然后配置路由(继承 cfgRouter 方法)),将路由请求导入到 控制器(ZWBaseCtr实例),
