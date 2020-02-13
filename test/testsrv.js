@@ -78,6 +78,40 @@ class testOderCtr extends prjBaseCtr
         return this.rr( obj );
     }
 }
+class testpage extends prjBaseCtr
+{
+    async ctr_uploadfile( param )
+    {
+        return this.rr( JSON.stringify( param.files) );
+    }
+    async ctr_testupload( param )
+    {
+        let s = '<!DOCTYPE html>\
+        <html lang="en">\
+        <head>\
+            <meta charset="UTF-8">\
+            <title>Title</title>\
+        </head>\
+        <body>\
+        \
+        <h1>hello worlds</h1>\
+        <form action="/api/v1/testpage.uploadfile" method="post" enctype="multipart/form-data">\
+            <p><input type="file" name="upload"></p>\
+            <p><input type="file" name="upload2"></p>\
+            <p><input type="submit" value="submit"></p>\
+        </form>\
+        \
+        </body>\
+        </html>';
+        return this.rr(s );
+    }
+    willSend( param , res , resb )
+    {
+        //不返回json..
+        res.send( resb.data );
+    }
+
+}
 
 class TestSrv extends zwbase.ZWBaseSrv
 {
@@ -104,6 +138,7 @@ class TestSrv extends zwbase.ZWBaseSrv
 
         apirouter.regCtr( '/subpath/subsubpath', nextrouter );
 
+        apirouter.regCtr('/testpage', new testpage(this) );
   
         //然后配置 到路由里面
         tarr.push( apirouter );
