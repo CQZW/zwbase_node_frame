@@ -53,9 +53,9 @@ class testCtr extends prjBaseCtr
 
         this.startRuningJob(5000);
     }
-    job_runing( isSingle )
+    job_runing( machinelock )
     {
-        this.log('do job ...., is single:' ,isSingle);
+        this.log('do job ....,machinelock:' ,machinelock);
         //继续执行,如果不调用 super.job_runing(); 任务不会在继续了
         super.job_runing();
     }
@@ -103,7 +103,7 @@ class testpage extends prjBaseCtr
         \
         </body>\
         </html>';
-        return this.rr(s );
+        return this.rr( s );
     }
     willSend( param , res , resb )
     {
@@ -131,6 +131,7 @@ class TestSrv extends zwbase.ZWBaseSrv
         //下面具体设置 这个 路由的规则
         let ctr = new testCtr( this );
         apirouter.regCtr( '/testctr' , ctr );
+        //然后请求 http://127.0.0.1/api/v1/testctr.getinfo 即可.
 
         let orderctr = new testOderCtr( this );
         let nextrouter = new zwbase.ZWRouter();
@@ -143,13 +144,15 @@ class TestSrv extends zwbase.ZWBaseSrv
         //然后配置 到路由里面
         tarr.push( apirouter );
         super.cfgRouter( tarr );
-        //然后请求 http://127.0.0.1/api/v1/testctr.getinfo 即可.
+        
         
         
     }
-    getHttpsOptions()
+    async job_runing()
     {
-        
+        //执行一些任务
+        //执行父类任务,会继续下次后台任务执行,如果不调用super.job_runing,任何不会继续了
+        return super.job_runing();
     }
 }
 
