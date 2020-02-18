@@ -15,7 +15,9 @@
          return '11';
      }
  }
+let xx = Symbol('aaa');
+let bbb =[];
+bbb.push( xx );
 
- let obj = new testc();
- console.log( JSON.stringify( obj ) );
+ console.log( xx === bbb[0] );
  
