@@ -3,7 +3,7 @@ const zwbase = require('../index');
 //测试 的控制器
 
 //先建立项目通用的控制器,这样可以让很多共同行为由这个基础类控制
-class prjBaseCtr extends zwbase.ZWBaseCtr
+class prjBaseCtr extends zwbase.ZWBaseCtr.ctr
 {
     constructor( srv ) {
         super(srv);

@@ -1,9 +1,7 @@
  
  class testc
  {
-     constructor(a) {
-         
-     }
+     
      Prop1 = 1;
 
      getinfo()
@@ -15,9 +13,14 @@
          return '11';
      }
  }
-let xx = Symbol('aaa');
-let bbb =[];
-bbb.push( xx );
 
- console.log( xx === bbb[0] );
+ class AA extends testc
+ {
+     Prop2 = '';
+ }
+ let x = new AA();
+ let obj = {};
+
+ Object.assign(obj,x);
+ console.log( obj );
  
