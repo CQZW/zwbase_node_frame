@@ -14,7 +14,7 @@
     let getnoif = await obj.wait(1000);
     console.log( 'wait obj',getnoif );
  }
-/*
+
  ff();
  setTimeout( ()=>{
 
@@ -22,7 +22,7 @@
         console.log('notif:',r);
     } )
 
- },2000);*/
+ },2000);
 
 
  let testqps = new QPS(1);
@@ -54,10 +54,53 @@
 
  testarr.addOneJobAndWait( {a:3} ).then( (jobrelsout)=>{
      console.log('job wait:',jobrelsout);
- } )
+ } );
 
 
+ const zwrotuer = require('../lib/zwrouter');
+ const zwctr = require('../lib/zwbasectr').ctr;
+ let rootrouter = new zwrotuer('/api/v1');
+
+ let ctruser = new zwctr();
+ let ctrorder = new zwctr();
+
+ rootrouter.regCtr('/user',ctruser);
+ rootrouter.regCtr('/order',ctrorder);
+
+ let subrouter = new zwrotuer('/other/old');
+ let ctr1 = new zwctr();
+ let ctr2 = new zwctr();
+
+ subrouter.regCtr('/user',ctr1);
+ subrouter.regCtr('/order',ctr2);
+ 
+ rootrouter.regCtr( subrouter.getPathPrefix(),subrouter );
 
 
+ 
+
+ console.log( 'ctr path:', ctrorder.getRouterPath() ,' :',ctr2.getRouterPath() );
+ console.log( 'ctr import:', ctrorder.importCtr('./user').getRouterPath() , ': ',ctrorder.importCtr('./other/old/user').getRouterPath() );
+ console.log( 'ctr import:',ctr1.importCtr('/user').getRouterPath(),' ',ctr2.importCtr('../order').getRouterPath() )
+ 
+
+
+ let abddd = new Set();
+ abddd.toJSON = function()
+ {
+     return 'a';
+ }
+ abddd.add( Symbol('aa'));
+
+ console.log(JSON.stringify( {abcd:abddd} ) );
+
+let objj  = {};
+objj.a = new Set();
+
+objj.a.add('abcd');
+ 
+
+
+console.log( JSON.stringify( objj ));
 
 

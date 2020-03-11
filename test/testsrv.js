@@ -30,6 +30,25 @@ class prjBaseCtr extends zwbase.ZWBaseCtr.ctr
     {
         return this.getKeyAndIvForEnc();
     }
+
+    rpc_encode( rpcdata )
+    {
+        return rpcdata;
+    }
+
+    rpc_decode( rpcdata )
+    {
+        return rpcdata;
+    }
+    /**
+     * 返回RPC管理器
+     * @returns {ZWRPCMgr}
+     * @memberof ZWRPCMgr
+     */
+    getRPCMgr()
+    {
+        return this._rpcMgr;
+    }
     
 }
 class testCtr extends prjBaseCtr
@@ -37,15 +56,23 @@ class testCtr extends prjBaseCtr
     ctrConfig()
     {
         super.ctrConfig();
-
-    } 
+    }
+    configRPC()
+    {
+        super.configRPC();
+        this.regRPC( this, this.ctr_getinfo );
+    }
     async ctr_getinfo( param )
     {
         let retobj = { 'info:':'i am cq zw ,test ctr ' };
         retobj.cfginfo = this.getSrv().ctrGetSrvCfgInfo();
-        let orderctr = this.importCtr( '/order' );
+        let orderctr = this.importCtr( './subpath/subsubpath/order' );
         retobj.orderinfo = orderctr.testfunc();
         return this.rr( retobj );
+    }
+    async ctr_test(param)
+    {
+        return this.rr(  this.getSrv().ctrGetPeerMgr().getAllPeers() );
     }
     srvStartOk()
     {
@@ -53,9 +80,9 @@ class testCtr extends prjBaseCtr
 
         this.startRuningJob(5000);
     }
-    job_runing( machinelock )
+    async job_runing( machine_lock ,global_lock ) 
     {
-        this.log('do job ....,machinelock:' ,machinelock);
+        this.log('do job ....,machinelock:' ,machine_lock);
         //继续执行,如果不调用 super.job_runing(); 任务不会在继续了
         super.job_runing();
     }
@@ -121,7 +148,8 @@ class TestSrv extends zwbase.ZWBaseSrv
     }
     srvConfig()
     {
-        this.needhttps = false;
+        this.needhttps = 2;
+        this.canRPC = true;
         return super.srvConfig();
     }
     cfgRouter( routers )
@@ -131,22 +159,19 @@ class TestSrv extends zwbase.ZWBaseSrv
         //下面具体设置 这个 路由的规则
         let ctr = new testCtr( this );
         apirouter.regCtr( '/testctr' , ctr );
-        //然后请求 http://127.0.0.1/api/v1/testctr.getinfo 即可.
+        //然后请求 http://127.0.0.1/api/v1/testctr.test 即可.
 
         let orderctr = new testOderCtr( this );
-        let nextrouter = new zwbase.ZWRouter();
+        let nextrouter = new zwbase.ZWRouter('/subpath/subsubpath');
         nextrouter.regCtr( '/order',orderctr );
 
-        apirouter.regCtr( '/subpath/subsubpath', nextrouter );
+        apirouter.regCtr( nextrouter.getPathPrefix(), nextrouter );
 
         apirouter.regCtr('/testpage', new testpage(this) );
   
         //然后配置 到路由里面
         tarr.push( apirouter );
         super.cfgRouter( tarr );
-        
-        
-        
     }
     async job_runing()
     {
