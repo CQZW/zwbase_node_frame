@@ -98,9 +98,21 @@ let objj  = {};
 objj.a = new Set();
 
 objj.a.add('abcd');
- 
 
+let funccc = function()
+{
+    try
+    {
+        return 1;
+    }
+    catch(e)
+    {
+        console.log(2);
+    }
+    finally
+    {
+        console.log('finally'+1);
+    }
+}
 
-console.log( JSON.stringify( objj ));
-
-
+funccc()
