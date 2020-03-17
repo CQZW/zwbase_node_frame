@@ -99,20 +99,13 @@ objj.a = new Set();
 
 objj.a.add('abcd');
 
-let funccc = function()
+let funccc = function( { '\'':a,b:{c:d} } = {'\'':'aaa',b:{c:'abcd'}} )
 {
-    try
-    {
-        return 1;
-    }
-    catch(e)
-    {
-        console.log(2);
-    }
-    finally
-    {
-        console.log('finally'+1);
-    }
+    console.log(a,d);
 }
+funccc();
+ 
 
-funccc()
+//let sss = "a=2,b=1,c=',:{=}()',d={'name':'zw'},e=function(x){return x+1;},f=(x)=>{return x+1}";
+let sss = "a=2,b=1,";
+console.log( sss.split( /={1}(\S+[^,])*,{1}/ ) );

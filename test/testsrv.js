@@ -30,26 +30,6 @@ class prjBaseCtr extends zwbase.ZWBaseCtr.ctr
     {
         return this.getKeyAndIvForEnc();
     }
-
-    rpc_encode( rpcdata )
-    {
-        return rpcdata;
-    }
-
-    rpc_decode( rpcdata )
-    {
-        return rpcdata;
-    }
-    /**
-     * 返回RPC管理器
-     * @returns {ZWRPCMgr}
-     * @memberof ZWRPCMgr
-     */
-    getRPCMgr()
-    {
-        return this._rpcMgr;
-    }
-    
 }
 class testCtr extends prjBaseCtr
 {
@@ -64,12 +44,30 @@ class testCtr extends prjBaseCtr
     }
     async ctr_getinfo( param )
     {
+        if( param.del == 1 )
+        {
+            this.getSrv().ctrGetPeerMgr().broadcastDel(  this.getSrv().ctrGetPeerMgr().getAllPeers()[0] );
+        }
         let retobj = { 'info:':'i am cq zw ,test ctr ' };
         retobj.cfginfo = this.getSrv().ctrGetSrvCfgInfo();
         let orderctr = this.importCtr( './subpath/subsubpath/order' );
         retobj.orderinfo = orderctr.testfunc();
         return this.rr( retobj );
     }
+    async ctr_testrpc( param )
+    {
+        let ret = this.makeResb('未知错误');
+        try
+        {
+            ret = await this.ctr_getinfo( param );
+        }
+        catch(e)
+        {
+            ret.msg = e.message;
+        }
+        return this.rr(ret);
+    }
+
     async ctr_test(param)
     {
         return this.rr(  this.getSrv().ctrGetPeerMgr().getAllPeers() );
@@ -148,9 +146,9 @@ class TestSrv extends zwbase.ZWBaseSrv
     }
     srvConfig()
     {
-        this.needhttps = 2;
-        this.canRPC = true;
-        return super.srvConfig();
+        super.srvConfig();
+        this._cfg.needhttps = 2;
+        this._cfg.canRPC = true;
     }
     cfgRouter( routers )
     {
