@@ -10,16 +10,16 @@
  let ff =  async function()
  {
     obj = new signalobj(-1);
-    console.log('wait...');
-    let getnoif = await obj.wait(1000);
-    console.log( 'wait obj',getnoif );
+    console.log(new Date,'wait...');
+    let getnoif = await obj.wait();
+    console.log(new Date,'wait obj:',getnoif);
  }
 
- ff();
+// ff();
  setTimeout( ()=>{
 
     obj.notify({a:1}).then( (r)=>{
-        console.log('notif:',r);
+        console.log(new Date,'notif:',r);
     } )
 
  },2000);
@@ -35,7 +35,7 @@
         console.log('do job at:',new Date() );
     }
  }
- //f2();
+// f2();
 
  let threafunc = async function( in_job )
  {
@@ -45,6 +45,7 @@
      console.log('out_job:',out_job.a);
      return Promise.resolve( out_job );
  }
+ 
  let testarr = new JobThread(threafunc);
  testarr.start();
  
@@ -53,7 +54,7 @@
  });
 
  testarr.addOneJobAndWait( {a:3} ).then( (jobrelsout)=>{
-     console.log('job wait:',jobrelsout);
+     console.log('add job and wait:',jobrelsout);
  } );
 
 
@@ -79,9 +80,9 @@
 
  
 
- console.log( 'ctr path:', ctrorder.getRouterPath() ,' :',ctr2.getRouterPath() );
- console.log( 'ctr import:', ctrorder.importCtr('./user').getRouterPath() , ': ',ctrorder.importCtr('./other/old/user').getRouterPath() );
- console.log( 'ctr import:',ctr1.importCtr('/user').getRouterPath(),' ',ctr2.importCtr('../order').getRouterPath() )
+// console.log( 'ctr path:', ctrorder.getRouterPath() ,' :',ctr2.getRouterPath() );
+ //console.log( 'ctr import:', ctrorder.importCtr('./user').getRouterPath() , ': ',ctrorder.importCtr('./other/old/user').getRouterPath() );
+ //console.log( 'ctr import:',ctr1.importCtr('/user').getRouterPath(),' ',ctr2.importCtr('../order').getRouterPath() )
  
 
 
@@ -92,7 +93,7 @@
  }
  abddd.add( Symbol('aa'));
 
- console.log(JSON.stringify( {abcd:abddd} ) );
+ //console.log(JSON.stringify( {abcd:abddd} ) );
 
 let objj  = {};
 objj.a = new Set();
@@ -103,9 +104,8 @@ let funccc = function( { '\'':a,b:{c:d} } = {'\'':'aaa',b:{c:'abcd'}} )
 {
     console.log(a,d);
 }
-funccc();
+
  
 
 //let sss = "a=2,b=1,c=',:{=}()',d={'name':'zw'},e=function(x){return x+1;},f=(x)=>{return x+1}";
-let sss = "a=2,b=1,";
-console.log( sss.split( /={1}(\S+[^,])*,{1}/ ) );
+ 

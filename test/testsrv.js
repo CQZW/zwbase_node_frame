@@ -49,9 +49,9 @@ class testCtr extends prjBaseCtr
             this.getSrv().ctrGetPeerMgr().broadcastDel(  this.getSrv().ctrGetPeerMgr().getAllPeers()[0] );
         }
         let retobj = { 'info:':'i am cq zw ,test ctr ' };
-        retobj.cfginfo = this.getSrv().ctrGetSrvCfgInfo();
-        let orderctr = this.importCtr( './subpath/subsubpath/order' );
-        retobj.orderinfo = orderctr.testfunc();
+        //retobj.cfginfo = this.getSrv().ctrGetSrvCfgInfo();
+        //let orderctr = this.importCtr( './subpath/subsubpath/order' );
+        //retobj.orderinfo = orderctr.testfunc();
         return this.rr( retobj );
     }
     async ctr_testrpc( param )
@@ -94,11 +94,11 @@ class testOderCtr extends prjBaseCtr
     }
     srvStartOk()
     {
-        this.log('order ctr srv ok')
+        this.log('order ctr srv ok');
     }
     async ctr_getorder( param )
     {
-        let obj = {}
+        let obj = {};
         obj.orderinfo = 'order info';
         return this.rr( obj );
     }
