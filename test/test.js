@@ -96,16 +96,19 @@
  //console.log(JSON.stringify( {abcd:abddd} ) );
 
 let objj  = {};
-objj.a = new Set();
 
-objj.a.add('abcd');
+let xx = 1;
+objj[xx] = 2332;
+console.log( objj );
+
 
 let funccc = function( { '\'':a,b:{c:d} } = {'\'':'aaa',b:{c:'abcd'}} )
 {
     console.log(a,d);
 }
 
- 
+
+const 
 
 //let sss = "a=2,b=1,c=',:{=}()',d={'name':'zw'},e=function(x){return x+1;},f=(x)=>{return x+1}";
  

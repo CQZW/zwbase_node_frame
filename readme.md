@@ -106,7 +106,8 @@ class testCtr ...
     CTR代码:
     //注册需要RPC的方法,这样可以将ctr_getinfo RPC化
     this.regRPC( this, this.ctr_getinfo );
-    //会将参数发送到远端节点同等路由下的CTR(控制器)响应并返回数据
+     
+    //这行代码会将参数发送到其他机器的同等路由,的CTR里面的 ctr_getinfo 执行,并返回数据到这里
     this.ctr_getinfo();
 
     ZWPeerMgr:提供节点发现管理,使用内网UDP广播
