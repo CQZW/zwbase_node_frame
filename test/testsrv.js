@@ -41,7 +41,7 @@ class testCtr extends prjBaseCtr
     {
         super.configRPC();
         this.regRPC( this, this.ctr_getinfo );
-        this.regRPC( this, this.ctr_testipc,'<->' );
+        this.regRPC( this, this.ctr_testipc,'->' );
     }
     async ctr_testipc( param )
     {
@@ -80,6 +80,7 @@ class testCtr extends prjBaseCtr
     }
     srvStartOk()
     {
+        super.srvStartOk();
         this.log('test ctr srv ok');
 
         this.startRuningJob(5000);
