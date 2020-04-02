@@ -95,17 +95,12 @@
 
  //console.log(JSON.stringify( {abcd:abddd} ) );
 
-let objj  = {};
+let objj  = 1 ;
+ 
+let cls = Object.getPrototypeOf( undefined ).constructor;
 
-let xx = 1;
-objj[xx] = 2332;
-console.log( objj );
-
-for( let k of objj )
-{
-    console.log( k );
-}
-
+ 
+console.log( new Array() );
 
 //let sss = "a=2,b=1,c=',:{=}()',d={'name':'zw'},e=function(x){return x+1;},f=(x)=>{return x+1}";
  
