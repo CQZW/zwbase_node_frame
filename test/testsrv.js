@@ -1,5 +1,5 @@
 const zwbase = require('../index');
-
+const ZWQPS = require('../lib/zwthread').ZWQPSCtr;
 //测试 的控制器
 
 //先建立项目通用的控制器,这样可以让很多共同行为由这个基础类控制
@@ -40,7 +40,7 @@ class testCtr extends prjBaseCtr
     configRPC()
     {
         super.configRPC();
-        this.regRPC( this, this.ctr_getinfo );
+        this.regRPC( this, this.ctr_getinfo,'<->' );
         this.regRPC( this, this.ctr_testipc,'<->' );
     }
     async ctr_testipc( param )
@@ -54,7 +54,7 @@ class testCtr extends prjBaseCtr
         {
             this.getSrv().ctrGetPeerMgr().broadcastDel(  this.getSrv().ctrGetPeerMgr().getAllPeers()[0] );
         }
-        let retobj = { 'info:':'i am cq zw ,test ctr ' };
+        let retobj = { 'info:':'i am cq zw ,test ctr :'+ Object.getPrototypeOf(param).constructor.name };
         //retobj.cfginfo = this.getSrv().ctrGetSrvCfgInfo();
         //let orderctr = this.importCtr( './subpath/subsubpath/order' );
         //retobj.orderinfo = orderctr.testfunc();

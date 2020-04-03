@@ -3,7 +3,7 @@
 
  const signalobj = zwthread.ZWSignalObject;
  const QPS      = zwthread.ZWQPSCtr;
- const JobThread =zwthread.ZWJobArrayThread;
+// const JobThread =zwthread.ZWJobArrayThread;
 
  let obj = null;
 
@@ -16,13 +16,13 @@
  }
 
 // ff();
- setTimeout( ()=>{
+//  setTimeout( ()=>{
 
-    obj.notify({a:1}).then( (r)=>{
-        console.log(new Date,'notif:',r);
-    } )
+//     obj.notify({a:1}).then( (r)=>{
+//         console.log(new Date,'notif:',r);
+//     } )
 
- },2000);
+//  },2000);
 
 
  let testqps = new QPS(1);
@@ -45,7 +45,7 @@
      console.log('out_job:',out_job.a);
      return Promise.resolve( out_job );
  }
- 
+ /*
  let testarr = new JobThread(threafunc);
  testarr.start();
  
@@ -56,7 +56,7 @@
  testarr.addOneJobAndWait( {a:3} ).then( (jobrelsout)=>{
      console.log('add job and wait:',jobrelsout);
  } );
-
+*/
 
  const zwrotuer = require('../lib/zwrouter');
  const zwctr = require('../lib/zwbasectr').ctr;
@@ -83,8 +83,6 @@
 // console.log( 'ctr path:', ctrorder.getRouterPath() ,' :',ctr2.getRouterPath() );
  //console.log( 'ctr import:', ctrorder.importCtr('./user').getRouterPath() , ': ',ctrorder.importCtr('./other/old/user').getRouterPath() );
  //console.log( 'ctr import:',ctr1.importCtr('/user').getRouterPath(),' ',ctr2.importCtr('../order').getRouterPath() )
- 
-
 
  let abddd = new Set();
  abddd.toJSON = function()
@@ -93,14 +91,30 @@
  }
  abddd.add( Symbol('aa'));
 
- //console.log(JSON.stringify( {abcd:abddd} ) );
-
-let objj  = 1 ;
+ const getclsbyname = function( tagmodule , name ,dep = 2 )
+ {
+     if( !tagmodule || !tagmodule.exports ) return null;
+     if( typeof tagmodule.exports != 'object') return null;
+     if( dep <= 0 ) return null;
+     let k = Object.keys( tagmodule.exports );
+     for( let one of k )
+     {
+         let v = tagmodule.exports[ one ];
+         if( typeof v != 'function' ) continue;
+         if( v.name == name ) return v;
+     }
+     if( !tagmodule.children || !tagmodule.children.length ) return null;
+     for( let one of tagmodule.children )
+     {
+        let v = getclsbyname( one , name ,dep-1);
+        if( v ) return v;
+     }
+     return null;
+ }
  
-let cls = Object.getPrototypeOf( undefined ).constructor;
+console.log(  getclsbyname(module, 'ZWQPSCtr') );
+
 
  
-console.log( new Array() );
-
 //let sss = "a=2,b=1,c=',:{=}()',d={'name':'zw'},e=function(x){return x+1;},f=(x)=>{return x+1}";
  
