@@ -41,11 +41,11 @@ class testCtr extends prjBaseCtr
     {
         super.configRPC();
         this.regRPC( this, this.ctr_getinfo );
-        this.regRPC( this, this.ctr_testipc,'->' );
+        this.regRPC( this, this.ctr_testipc,'<->' );
     }
     async ctr_testipc( param )
     {
-        let retobj = { 'info':'testipc' };
+        let retobj ={'info':'ipc ret data from:'+process.pid};
         return this.rr( retobj );
     }
     async ctr_getinfo( param )
