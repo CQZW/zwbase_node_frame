@@ -112,8 +112,12 @@
      return null;
  }
  
-console.log(  getclsbyname(module, 'ZWQPSCtr') );
+//console.log(  getclsbyname(module, 'ZWQPSCtr') );
 
+let abc = {};
+abc.aa = { 'll':1 };
+delete abc['aa']['ll'];
+console.log( abc );
 
  
 //let sss = "a=2,b=1,c=',:{=}()',d={'name':'zw'},e=function(x){return x+1;},f=(x)=>{return x+1}";
