@@ -1,6 +1,6 @@
 {
   "name": "zwbase",
-  "version": "2.1.7",
+  "version": "2.1.8",
   "description": "a srv frame base on express",
   "main": "index.js",
   "scripts": {
