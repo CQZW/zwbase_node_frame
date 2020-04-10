@@ -113,11 +113,20 @@
  }
  
 //console.log(  getclsbyname(module, 'ZWQPSCtr') );
+const   EventEmitter    = require('events');
 
-let abc = {};
-abc.aa = { 'll':1 };
-delete abc['aa']['ll'];
-console.log( abc );
+const abcf  = async function()
+{
+    let ev = new EventEmitter();
+    let r = new Promise( (resolve,reject) =>{
+        ev.once( 'a', (x)=>{ resolve(x) } )
+    });
+    ev.emit('a','b');
+    let xxxx = await r;
+    console.log( xxxx );
+}
+abcf();
+
 
  
 //let sss = "a=2,b=1,c=',:{=}()',d={'name':'zw'},e=function(x){return x+1;},f=(x)=>{return x+1}";

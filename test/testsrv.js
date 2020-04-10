@@ -156,6 +156,7 @@ class TestSrv extends zwbase.ZWBaseSrv
         super.srvConfig();
         this._cfg.needhttps = 2;
         this._cfg.canRPC = true;
+        this._cfg.need_session = true;
     }
     cfgRouter( routers )
     {
