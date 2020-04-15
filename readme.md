@@ -2,7 +2,7 @@
 ### 1.服务(SRV)-路由器-控制器(CTR)使用
     ctr 注册到 router ,router 注册到 srv,router可以注册到router生成二级路径
     SRV:实现HTTP 创建,监听,加载路由和控制器,提供RPC节点管理器,机器唯一锁,后台任务循环
-    CTR:提供session处理,响应请求通用化,加密/解密,RPC 方法管理,后台任务循环
+    CTR:响应请求通用化,加密/解密,RPC 方法管理,后台任务循环
 calss TestSrv ....
 
     cfgRouter(routers)
@@ -23,8 +23,7 @@ calss TestSrv ....
             "data":
                 {
                     "info:":"i am cq zw ,test ctr "
-                },
-                "sessionid":"e4db0e536892fea72572604dfbecd0f9"
+                }
             }
     }
 class testCtr ...
