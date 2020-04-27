@@ -127,7 +127,22 @@ const abcf  = async function()
 }
 abcf();
 
-
+ 
  
 //let sss = "a=2,b=1,c=',:{=}()',d={'name':'zw'},e=function(x){return x+1;},f=(x)=>{return x+1}";
- 
+
+const   ZWRPCBridge = require('../lib/zwrpcbridge').ZWRPCBridge;
+
+let testrpcbr = new ZWRPCBridge();
+testrpcbr.start().then(()=>{
+
+    testrpcbr.iCanResbThisFunc('/api/v1/testctr+this+ctr_getinfo');
+});
+testrpcbr.on( ZWRPCBridge.st_event_rpc_on , (r)=>{
+    
+    r.ret_data = {"code":0,"msg":"操作成功","data":{"info:":"i am cq zw ,test ctr :ZWParam,resb at:"+process.pid}};
+    testrpcbr.resbDataForCall( r );
+
+});
+
+

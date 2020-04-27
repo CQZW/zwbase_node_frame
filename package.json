@@ -1,6 +1,6 @@
 {
   "name": "zwbase",
-  "version": "2.1.9",
+  "version": "2.1.11",
   "description": "a srv frame base on express",
   "main": "index.js",
   "scripts": {
@@ -15,10 +15,11 @@
   "author": "cqzw",
   "license": "MIT",
   "dependencies": {
+    "bson": "^4.0.4",
     "express": "^4.17.1",
     "log4js": "^5.3.0",
     "multer": "^1.4.2",
-    "node-fetch": "^2.6.0"
+    "redis": "^3.0.2"
   },
   "repository": {
     "type": "git",

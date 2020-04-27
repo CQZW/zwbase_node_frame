@@ -1,5 +1,4 @@
 const zwbase = require('../index');
-const ZWQPS = require('../lib/zwthread').ZWQPSCtr;
 //测试 的控制器
 
 //先建立项目通用的控制器,这样可以让很多共同行为由这个基础类控制
@@ -8,18 +7,16 @@ class prjBaseCtr extends zwbase.ZWBaseCtr.ctr
     constructor( srv ) {
         super(srv);
     }
-
+    checkParam( param)
+    {
+        param.version = 1;
+        param.client = 'mac';
+        return super.checkParam( param );
+    }
     ctrConfig()
     {
         super.ctrConfig();
         this.encryType = 0;
-    }
-    checkParam( param )
-    {
-        param.client = 'ios';
-        param.version = '1.0';
-        param.deviceid = 'aaa';
-        return super.checkParam( param );
     }
     //比如加密解密相关的秘钥获取,,可以有这里全部修改了,
     getKeyAndIvForEnc()
@@ -40,21 +37,11 @@ class testCtr extends prjBaseCtr
     configRPC()
     {
         super.configRPC();
-        this.regRPC( this, this.ctr_getinfo,'<->' );
-        this.regRPC( this, this.ctr_testipc,'->' );
-    }
-    async ctr_testipc( param )
-    {
-        let retobj ={'info':'ipc ret data from:'+process.pid};
-        return this.rr( retobj );
+        this.regRPC( this.ctr_getinfo,'<->' );
     }
     async ctr_getinfo( param )
     {
-        if( param.del == 1 )
-        {
-            this.getSrv().ctrGetPeerMgr().broadcastDel(  this.getSrv().ctrGetPeerMgr().getAllPeers()[0] );
-        }
-        let retobj = { 'info:':'i am cq zw ,test ctr :'+ Object.getPrototypeOf(param).constructor.name };
+        let retobj = {'info:':'i am cq zw ,test ctr :'+ Object.getPrototypeOf(param).constructor.name +',resb at:'+ process.pid};
         //retobj.cfginfo = this.getSrv().ctrGetSrvCfgInfo();
         //let orderctr = this.importCtr( './subpath/subsubpath/order' );
         //retobj.orderinfo = orderctr.testfunc();
@@ -87,7 +74,7 @@ class testCtr extends prjBaseCtr
     }
     async job_runing( machine_lock ,global_lock ) 
     {
-        this.log('do job ....,machinelock:' ,machine_lock);
+        this.log('do job ....,machinelock:' ,machine_lock,global_lock);
         //继续执行,如果不调用 super.job_runing(); 任务不会在继续了
         super.job_runing();
     }
@@ -186,6 +173,5 @@ class TestSrv extends zwbase.ZWBaseSrv
     }
 }
 
-console.log('req http://127.0.0.1/api/v1/testctr.getinfo for test');
 let inst = new TestSrv();
 inst.start();

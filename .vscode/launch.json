@@ -17,12 +17,6 @@
             "request": "launch",
             "name": "test",
             "program": "${workspaceFolder}/test/test.js"
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "testrpc",
-            "program": "${workspaceFolder}/test/testrpc.js"
         }
     ]
 }
