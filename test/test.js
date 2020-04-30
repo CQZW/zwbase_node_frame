@@ -136,13 +136,15 @@ const   ZWRPCBridge = require('../lib/zwrpcbridge').ZWRPCBridge;
 let testrpcbr = new ZWRPCBridge();
 testrpcbr.start().then(()=>{
 
-    testrpcbr.iCanResbThisFunc('/api/v1/testctr+this+ctr_getinfo');
+    testrpcbr.iCanResbThisFunc('testCtr.ctr_getinfo');
 });
 testrpcbr.on( ZWRPCBridge.st_event_rpc_on , (r)=>{
     
+    console.log('i am on ..');
     r.ret_data = {"code":0,"msg":"操作成功","data":{"info:":"i am cq zw ,test ctr :ZWParam,resb at:"+process.pid}};
     testrpcbr.resbDataForCall( r );
 
 });
+
 
 

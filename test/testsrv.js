@@ -38,6 +38,7 @@ class testCtr extends prjBaseCtr
     {
         super.configRPC();
         this.regRPC( this.ctr_getinfo,'<->' );
+        this.regRPC( this.ctr_testrpc,'<->' );
     }
     async ctr_getinfo( param )
     {
