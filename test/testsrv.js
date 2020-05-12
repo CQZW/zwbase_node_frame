@@ -28,6 +28,15 @@ class prjBaseCtr extends zwbase.ZWBaseCtr.ctr
         return this.getKeyAndIvForEnc();
     }
 }
+class RObj 
+{
+    timeat = new Date();
+
+    what = 1;
+
+    isok = true;
+
+}
 class testCtr extends prjBaseCtr
 {
     ctrConfig()
@@ -38,7 +47,17 @@ class testCtr extends prjBaseCtr
     {
         super.configRPC();
         this.regRPC( this.ctr_getinfo,'<->' );
-        this.regRPC( this.ctr_testrpc,'<->' );
+        
+        this.regRPC( this.getObjFromHere,'<->' );
+
+        this.getSrv().ctrGetRedisClient().hmset(  'testk','k',new Date(),(e,r)=>{
+           
+            console.log( 'mset',e );
+        } ) ;
+    }
+    async getObjFromHere( idv )
+    {
+        return Promise.resolve( new RObj() );
     }
     async ctr_getinfo( param )
     {
@@ -53,13 +72,19 @@ class testCtr extends prjBaseCtr
         let ret = this.makeResb('未知错误');
         try
         {
-            ret = await this.ctr_getinfo( param );
+            ret.code = 0;
+            ret.msg = '操作成功';
+            ret.data = await this.getObjFromHere(1);
         }
         catch(e)
         {
             ret.msg = e.message;
         }
         return this.rr(ret);
+    }
+    getSearchClsStartAt( )
+    {
+        return module;
     }
 
     async ctr_test(param)
@@ -176,3 +201,5 @@ class TestSrv extends zwbase.ZWBaseSrv
 
 let inst = new TestSrv();
 inst.start();
+
+module.exports.testmodel  = RObj;
