@@ -140,6 +140,8 @@ testrpcbr.start().then(()=>{
 });
 testrpcbr.on( ZWRPCBridge.st_event_rpc_on , (r)=>{
     
+    var sss = "aaaa\
+    ddddd";
     console.log('i am on ..');
     r.ret_data = {"code":0,"msg":"操作成功","data":{"info:":"i am cq zw ,test ctr :ZWParam,resb at:"+process.pid}};
     testrpcbr.resbDataForCall( r );
